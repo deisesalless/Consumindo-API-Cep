@@ -1,5 +1,6 @@
 package com.deisesales.enderecocep.controllers;
 
+import com.deisesales.enderecocep.dtos.CepBuscarDTO;
 import com.deisesales.enderecocep.dtos.EnderecoSalvarDTO;
 import com.deisesales.enderecocep.entities.EnderecoEntity;
 import com.deisesales.enderecocep.services.EnderecoService;
@@ -22,21 +23,13 @@ public class EnderecoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(data));
     }
 
-    @GetMapping("/{cep}")
-    public ResponseEntity<EnderecoEntity> buscarCep(@PathVariable @Valid String cep) {
-
+    @GetMapping("/buscar/{cep}")
+    public ResponseEntity<CepBuscarDTO> buscarCep(@PathVariable @Valid String cep) {
         String url = "http://viacep.com.br/ws/" + cep + "/json/";
         var restTemplate = new RestTemplate();
-        var resposta = restTemplate.getForEntity(url, EnderecoEntity.class);
-        var dados = resposta.getBody();
-        EnderecoEntity endereco = new EnderecoEntity();
-        endereco.setCep(dados.getCep());
-        endereco.setLogradouro(dados.getLogradouro());
-        endereco.setComplemento(dados.getComplemento());
-        endereco.setBairro(dados.getBairro());
-        endereco.setLocalidade(dados.getLocalidade());
-        endereco.setUf(dados.getUf());
-
-        return ResponseEntity.ok().body(endereco);
+        var resposta = restTemplate.getForEntity(url, CepBuscarDTO.class);
+        var endereco = resposta.getBody();
+        return ResponseEntity.ok().body(new CepBuscarDTO(
+                endereco.getCep(), endereco.getLogradouro(), endereco.getComplemento(), endereco.getBairro(), endereco.getLocalidade(), endereco.getUf()));
     }
 }
