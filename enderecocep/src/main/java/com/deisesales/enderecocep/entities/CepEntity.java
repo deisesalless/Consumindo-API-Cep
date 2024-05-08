@@ -1,19 +1,18 @@
 package com.deisesales.enderecocep.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.Pattern;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CepEntity {
 
+    @Pattern(regexp = "[0-9]{8}]")
     private String cep;
+
     private String logradouro;
     private String complemento;
     private String bairro;
