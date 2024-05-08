@@ -6,6 +6,8 @@ import com.deisesales.enderecocep.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClienteService {
 
@@ -15,5 +17,9 @@ public class ClienteService {
     public ClienteEntity salvar(ClienteSalvarDTO data) {
         var cliente = new ClienteEntity(data.nome());
         return repository.save(cliente);
+    }
+
+    public List<ClienteEntity> listarTodos() {
+        return repository.findAll();
     }
 }
