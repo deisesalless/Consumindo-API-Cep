@@ -1,5 +1,6 @@
 package com.deisesales.enderecocep.services;
 
+import com.deisesales.enderecocep.dtos.ClienteAtualizarDTO;
 import com.deisesales.enderecocep.dtos.ClienteSalvarDTO;
 import com.deisesales.enderecocep.entities.ClienteEntity;
 import com.deisesales.enderecocep.repositories.ClienteRepository;
@@ -26,5 +27,19 @@ public class ClienteService {
 
     public Optional<ClienteEntity> buscarPorID(Integer id) {
         return repository.findById(id);
+    }
+
+    public ClienteEntity atualizarPorID(Integer id, ClienteAtualizarDTO dados) {
+        Optional<ClienteEntity> cliente = repository.findById(id);
+
+        var nome = dados.nomeCompleto().isEmpty() ? cliente.get().getNomeCompleto() : dados.nomeCompleto();
+        var cpf = dados.cpf().isEmpty() ? cliente.get().getCpf() : dados.cpf();
+        var email = dados.email().isEmpty() ? cliente.get().getEmail() : dados.email();
+
+        cliente.get().setNomeCompleto(nome);
+        cliente.get().setCpf(cpf);
+        cliente.get().setEmail(email);
+
+        return repository.save(cliente.get());
     }
 }

@@ -1,5 +1,6 @@
 package com.deisesales.enderecocep.controllers;
 
+import com.deisesales.enderecocep.dtos.ClienteAtualizarDTO;
 import com.deisesales.enderecocep.dtos.ClienteSalvarDTO;
 import com.deisesales.enderecocep.entities.ClienteEntity;
 import com.deisesales.enderecocep.services.ClienteService;
@@ -35,5 +36,13 @@ public class ClienteController {
         return cliente.map(clienteEntity ->
                 ResponseEntity.status(HttpStatus.FOUND).body(clienteEntity)).orElseGet(() ->
                 ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteEntity> atualizarPorID(@PathVariable Integer id, @RequestBody ClienteAtualizarDTO dados) {
+        var cliente = service.buscarPorID(id);
+        if (cliente.isEmpty()) ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(service.atualizarPorID(id, dados));
     }
 }

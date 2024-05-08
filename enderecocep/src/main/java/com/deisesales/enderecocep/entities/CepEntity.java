@@ -17,4 +17,5 @@ public class CepEntity {
     private String bairro;
     private String localidade;
     private String uf;
+
 }
