@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/consulta")
+@RequestMapping("/pesquisar")
 public class CepController {
 
     @Autowired

@@ -13,7 +13,7 @@ public class ClienteService {
     private ClienteRepository repository;
 
     public ClienteEntity salvar(ClienteSalvarDTO data) {
-        var cliente = new ClienteEntity(data.nome());
+        var cliente = new ClienteEntity(data.nomeCompleto(), data.cpf(), data.email());
         return repository.save(cliente);
     }
 }

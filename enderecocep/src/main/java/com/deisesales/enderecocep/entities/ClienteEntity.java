@@ -1,10 +1,13 @@
 package com.deisesales.enderecocep.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,11 +21,21 @@ public class ClienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false)
     private String nomeCompleto;
 
-    public ClienteEntity(String nomeCompleto) {
-        this.nomeCompleto = nomeCompleto;
-    }
+    @CPF
+    @Pattern(regexp = "[0-9]{11}")
+    @Column(name = "CPF", unique = true, nullable = false)
+    private String cpf;
 
+    @Email
+    @Column(nullable = false)
+    private String email;
+
+    public ClienteEntity(String nomeCompleto, String cpf, String email) {
+        this.nomeCompleto = nomeCompleto;
+        this.cpf = cpf;
+        this.email = email;
+    }
 }
