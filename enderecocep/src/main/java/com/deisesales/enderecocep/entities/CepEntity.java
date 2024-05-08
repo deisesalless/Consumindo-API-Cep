@@ -7,7 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class CepEntity {
 
     @Pattern(regexp = "[0-9]{8}]")
