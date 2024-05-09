@@ -1,6 +1,5 @@
 package com.deisesales.enderecocep.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,19 +18,14 @@ public class EnderecoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String cep;
-    private String logradouro;
-    private String complemento;
-    private String bairro;
-    private String localidade;
-    private String uf;
+    @Column(nullable = false)
+    private Integer numero;
 
-    public EnderecoEntity(String cep, String logradouro, String complemento, String bairro, String localidade, String uf) {
-        this.cep = cep;
-        this.logradouro = logradouro;
-        this.complemento = complemento;
-        this.bairro = bairro;
-        this.localidade = localidade;
-        this.uf = uf;
+    @Embedded
+    private CepEntity api;
+
+    public EnderecoEntity(Integer numero, CepEntity api) {
+        this.numero = numero;
+        this.api = new CepEntity(api.getCep(), api.getLogradouro(), api.getComplemento(), api.getBairro(), api.getLocalidade(), api.getUf());
     }
 }

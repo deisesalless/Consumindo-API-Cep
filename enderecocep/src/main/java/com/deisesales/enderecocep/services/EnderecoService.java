@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EnderecoService {
 
@@ -14,8 +16,12 @@ public class EnderecoService {
     private EnderecoRepository repository;
 
     public EnderecoEntity salvar(@Valid EnderecoSalvarDTO data) {
-        var endereco = new EnderecoEntity(data.cep(), data.logradouro(), data.complemento(), data.bairro(), data.localidade(), data.uf());
+        var endereco = new EnderecoEntity(data.numero(), data.api());
         return repository.save(endereco);
+    }
+
+    public List<EnderecoEntity> listarTodos() {
+        return repository.findAll();
     }
 
 }
