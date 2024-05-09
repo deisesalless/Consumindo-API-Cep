@@ -20,8 +20,11 @@ public class CepController {
     public ResponseEntity<CepEntity> buscar(@PathVariable @Valid String cep) {
         var resposta = service.buscarCep(cep);
 
-        if (resposta == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if (resposta == null || resposta.getCep() == null || resposta.getCep().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
 
+        // ResponseEntity.status(HttpStatus.FOUND).body(resposta)
         return ResponseEntity.status(HttpStatus.FOUND).body(resposta);
     }
 
