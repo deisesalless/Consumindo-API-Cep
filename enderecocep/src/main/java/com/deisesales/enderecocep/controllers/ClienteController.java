@@ -41,8 +41,20 @@ public class ClienteController {
     @PutMapping("/{id}")
     public ResponseEntity<ClienteEntity> atualizarPorID(@PathVariable Integer id, @RequestBody ClienteAtualizarDTO dados) {
         var cliente = service.buscarPorID(id);
-        if (cliente.isEmpty()) ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
+        if (cliente.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.status(HttpStatus.OK).body(service.atualizarPorID(id, dados));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable Integer id) {
+        var cliente = service.buscarPorID(id);
+
+        if (cliente.isPresent()) {
+            service.delete(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
