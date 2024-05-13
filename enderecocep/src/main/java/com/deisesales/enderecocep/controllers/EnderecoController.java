@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.FOUND;
+
 @RestController
 @RequestMapping("/endereco")
 public class EnderecoController {
@@ -26,6 +28,33 @@ public class EnderecoController {
     @GetMapping
     public ResponseEntity<List<EnderecoEntity>> listarTodos() {
         return ResponseEntity.status(HttpStatus.OK).body(service.listarTodos());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EnderecoEntity> buscarPorID(@PathVariable Integer id) {
+        var endereco = service.buscarPorID(id);
+
+        return endereco.map(enderecoEntity ->
+                ResponseEntity.status(FOUND).body(enderecoEntity)).orElseGet(() ->
+                ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EnderecoEntity> atualizarPorID(@PathVariable Integer id, @RequestBody EnderecoSalvarDTO dados) {
+        var endereco = service.buscarPorID(id);
+
+        if (endereco.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(FOUND).body(service.atualizarPorID(id, dados));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete (@PathVariable Integer id) {
+        var endereco = service.buscarPorID(id);
+
+        if (endereco.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        service.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }
