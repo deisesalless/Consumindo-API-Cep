@@ -1,6 +1,7 @@
 package com.deisesales.enderecocep.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
@@ -9,13 +10,22 @@ import lombok.*;
 @Data
 public class CepEntity {
 
-    @Pattern(regexp = "[0-9]{8}]")
+    @Pattern(regexp = "\\d{5}-\\d{3}")
     private String cep;
 
+    @NotBlank
     private String logradouro;
+
+    @NotBlank
     private String complemento;
+
+    @NotBlank
     private String bairro;
+
+    @NotBlank
     private String localidade;
+
+    @NotBlank
     private String uf;
 
 }

@@ -4,6 +4,8 @@ import com.deisesales.enderecocep.dtos.EnderecoSalvarDTO;
 import com.deisesales.enderecocep.entities.EnderecoEntity;
 import com.deisesales.enderecocep.services.EnderecoService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
