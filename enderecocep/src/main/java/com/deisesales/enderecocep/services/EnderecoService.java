@@ -40,9 +40,9 @@ public class EnderecoService {
         var bairro = endereco.get().getApi().getBairro();
         var localidade = endereco.get().getApi().getLocalidade();
         var uf = endereco.get().getApi().getUf();
-        var enderecoNovo = new EnderecoEntity(numero, new CepEntity(cep, logradouro, complemento, bairro, localidade, uf));
+        var enderecoAtualizado = new EnderecoEntity(id, numero, new CepEntity(cep, logradouro, complemento, bairro, localidade, uf));
 
-        return repository.save(enderecoNovo);
+        return repository.save(enderecoAtualizado);
     }
 
     public void delete (Integer id) {
