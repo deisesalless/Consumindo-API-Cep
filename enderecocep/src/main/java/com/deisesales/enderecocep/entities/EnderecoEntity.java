@@ -1,12 +1,12 @@
 package com.deisesales.enderecocep.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -23,6 +23,17 @@ public class EnderecoEntity {
 
     @Embedded
     private CepEntity api;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "cliente_ID")
+    private ClienteEntity cliente;
+
+    public EnderecoEntity(Integer id, Integer numero, CepEntity api) {
+        this.id = id;
+        this.numero = numero;
+        this.api = new CepEntity(api.getCep(), api.getLogradouro(), api.getComplemento(), api.getBairro(), api.getLocalidade(), api.getUf());
+    }
 
     public EnderecoEntity(Integer numero, CepEntity api) {
         this.numero = numero;

@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -32,6 +35,9 @@ public class ClienteEntity {
     @Email
     @Column(nullable = false)
     private String email;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<EnderecoEntity> listaEndereco = new ArrayList<>();
 
     public ClienteEntity(String nomeCompleto, String cpf, String email) {
         this.nomeCompleto = nomeCompleto;
